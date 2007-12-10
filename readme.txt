@@ -1,5 +1,5 @@
 === DDAy ===
-Tags: comments, widget
+Tags: events, countdown, date, widget
 Requires at least: 1.5
 Tested up to: 2.3
 Stable tag: trunk
