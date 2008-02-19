@@ -36,6 +36,7 @@ So this plugin is very interesting for major (or minor) events of the life, birt
 == Changelog / Todo ==
 
 *0.2*
+
 * -1 in display before and after => No display
 * Widget
 * 1 bug fixed Fonction : drag and drope
@@ -43,19 +44,26 @@ So this plugin is very interesting for major (or minor) events of the life, birt
 * Nice tooltip : can be de-activate easilly
   
 *0.3*
+
 * Fix a bug with Publish / Unpublish in admin page
    
 *0.3.1*
+
 * Fix a select query in the database -> list of dday where not displayed
    
 *0.3.2*
+
 * Fix an error to execute the query of the frequence of repetion
 * Fix an error that displayed the li tag when the event shouldn't be displayed
+
+*0.3.3*
+
+* Possibility to set the title of the widget (Thanks to Xavier Montaron)
    
 *ToDo*
+
 * Choice of unit of the countdown more flexible
 * Correction of eventual bugs
-* IE Admin Friendly
 
 Thanks to all who sent bug reports and ideas for improvements.
 Please send me a mail if I forgot you to mention here.
