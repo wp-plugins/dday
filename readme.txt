@@ -1,7 +1,7 @@
 === DDAy ===
 Tags: events, countdown, date, widget
 Requires at least: 1.5
-Tested up to: 2.3
+Tested up to: 2.5
 Stable tag: trunk
 
 This plugin allow to associate a countdown to events.
@@ -27,7 +27,7 @@ So this plugin is very interesting for major (or minor) events of the life, birt
 2. Upload it in /wp-content/plugins/dday/ of your Wordpress installation
 3. Activate the Plugin
 4. Visit the management page in the administration of Wordpress
-5. Change the format of display to your taste and to your language for non english-speaking people (See it in "Edit Options" at the bottom )
+5. Change the format of display to your taste and to your language for non english-speaking people (See it in "Edit Options" at the bottom ). ITS VERY IMPORTANT FOR NON ENGLISH USERS!!!
 6. Add DDays and modify them order with the drag and drope function.
 7. Insert <?php wp_dday_list(); ?> in your sidebar to display the list of all active DDays or use the widget
 
@@ -56,14 +56,16 @@ So this plugin is very interesting for major (or minor) events of the life, birt
 * Fix an error to execute the query of the frequence of repetion
 * Fix an error that displayed the li tag when the event shouldn't be displayed
 
-*0.3.3*
+*0.3.4*
 
-* Possibility to set the title of the widget (Thanks to Xavier Montaron)
+* Now can be localized
+
    
 *ToDo*
 
 * Choice of unit of the countdown more flexible
 * Correction of eventual bugs
+* IE Admin Friendly
 
 Thanks to all who sent bug reports and ideas for improvements.
 Please send me a mail if I forgot you to mention here.

@@ -4,6 +4,9 @@ Author: Mdkart
 Author URI: http:/mdkart.fr
 Description: Admin tool for the Dday plugin.
 */
+// Localisation
+load_plugin_textdomain('wpdday', 'wp-content/plugins/dday/languages');
+
 
 ### Variables Variables Variables
 $base_name = plugin_basename('dday/edit-dday.php');
@@ -38,8 +41,8 @@ echo '<script src="'.get_option('siteurl').'/wp-content/plugins/dday/script/vali
 		</script>
 <noscript>
 <div class="error">
-<h1 style ="text-align: center;">JAVASCRIPT MUST BE ENABLED</h1>
-<p>Many errors possible if javascript not enabled</p></div></noscript>
+<h1 style ="text-align: center;"><?php _e('JAVASCRIPT MUST BE ENABLED', 'wpdday')?></h1>
+<p><?php _e('Many errors are possible if javascript not enabled', 'wpdday')?></p></div></noscript>
 <?php
 //////////////    Start First Run Check&Run   /////////////////
 $tableExists = false;
@@ -81,11 +84,19 @@ if ( !$tableExists )
 	$sql = "INSERT INTO `" . WP_DDAY_TABLE . "`(ddayID, title, date, past, yester, tod, imm, tom, futur, visible) values "
 	     . '(1, "DDAY OPTIONS", 0, "%TITLE% for %DELAY_DAY% days", "%TITLE% yesterday", "%TITLE% today", "%TITLE% today in %DELAY_HR%h%DELAY_MIN%", "%TITLE% tomorrow", "%TITLE% in %DELAY_DAY% days", "no")';
 	$wpdb->get_results($sql);
-	echo "<div class=\"updated\"><p><strong>Hola,</strong><br /><br />
-	This seems to be your first time visiting this page. 
-	I've created a database table for you (" . WP_DDAY_TABLE . "). If you want to remove the data, make sure to delete that table after deactivating the plugin.<br /> 
-	You can edit default options to <strong>translate this plugin to your language <a href=\"http://mdkart.fr/blog/wp-admin/edit.php?page=dday/edit-dday.php&action=edit&ddayID=1\">here</a></strong>.<br />
-	This plugin's website is at <a href=\"http://mdkart.fr/\">http://mdkart.fr/</a></p></div>";
+	?>
+	<div class="updated"><p><strong>
+	<?php _e('Hola,', 'wpdday');?>
+	</strong><br /><br />
+	<?php _e('This seems to be your first time visiting this page. I\'ve created a database table for you (wp_dday).', 'wpdday');?><br />
+	<?php _e('If you want to remove the data, make sure to delete that table after deactivating the plugin', 'wpdday');?><br />
+	</p></div>
+	<div class="error"><p>
+	<?php _e('You can edit default options on the bottom of this page', 'wpdday');?><br />
+	<strong><?php _e('THIS IS HIGHLY RECOMMANDED IF YOUR BLOG ISNT IN ENGLISH', 'wpdday');?>
+	<h3><a href ="edit.php?page=dday/edit-dday.php&action=edit&ddayID=1"><?php _e('Edit Options', 'wpdday');?></a></h3></strong>
+	</p></div>
+	<?php
 }
 ///////////////      End first run      ///////////////
 ///////////////   Handle any manipulations   //////////////////
@@ -124,7 +135,7 @@ if ( $action == 'add' )
 	}	
 	if ( empty($title) or empty($month) or empty($year) or empty($day))
 	{	?>
-		<div class="error"><p><strong>Fill all required fields</strong></p></div>
+		<div class="error"><p><strong><?php _e('Fill all required fields', 'wpdday');?></strong></p></div>
 		<?php 
 	}	
 	else {
@@ -152,11 +163,11 @@ if ( $action == 'add' )
 	
 	if ( empty($result) || empty($result[0]->ddayID) )
 	{ ?>
-		<div class="error"><p><strong>Failure:</strong> Holy crap you destroyed the internet! That, or something else went wrong when I tried to insert the DDay. Try again? </p></div>
+		<div class="error"><p><strong><?php _e('Failure:', 'wpdday');?></strong><?php _e('Holy crap you destroyed the internet! That, or something else went wrong when I tried to insert the DDay. Try again? ', 'wpdday');?></p></div>
 		<?php 
 	}
 	else {?>
-		<div class="updated"><p>Freaking sweet. You just added DDay id <?php echo $result[0]->ddayID;?> to the database.</p></div>
+		<div class="updated"><p><?php _e('Freaking sweet. You just added a new DDay to the database.', 'wpdday');?></p></div>
 		<?php 
 	}
 	}
@@ -198,13 +209,13 @@ elseif ( $action == 'edit_save' )
 	if ( empty($ddayID) )
 	{
 	?>
-		<div class="error"><p><strong>Failure:</strong> No DDay ID given. Can't save nothing. Giving up...</p></div>
+		<div class="error"><p><strong><?php _e('Failure: ', 'wpdday');?></strong> <?php _e('No DDay ID given. Can\'t save nothing. Giving up...', 'wpdday');?></p></div>
 		<?php 
 	}
 	elseif ( (empty($title) or empty($month) or empty($year) or empty($day)) and ($ddayID != 1)) 
 	{
 		?>
-		<div class="error"><p><strong>Fill all required fields</strong></p></div>
+		<div class="error"><p><strong><?php _e('Fill all required fields', 'wpdday');?></strong></p></div>
 		<?php	
 	}
 	else
@@ -229,12 +240,12 @@ elseif ( $action == 'edit_save' )
 		
 		if ( empty($result) || empty($result[0]->ddayID) )
 		{ ?>
-			<div class="error"><p><strong>Failure:</strong> The Evil Monkey wouldn't let me update your Dday. Try again? </p></div>
+			<div class="error"><p><strong><?php _e('Failure: ', 'wpdday');?></strong><?php _e('The Evil Monkey wouldn\'t let me update your Dday. Try again?', 'wpdday');?> </p></div>
 			<?php 
 		}
 		else
 		{ ?>
-			<div class="updated"><p>Dday <?php echo $ddayID;?> updated successfully</p></div>
+			<div class="updated"><p><?php _e('This Dday updated successfully.', 'wpdday');?></p></div>
 			<?php 
 		}		
 	}
@@ -242,7 +253,7 @@ elseif ( $action == 'edit_save' )
 elseif ( $action == 'delete' )
 {	if ( empty($ddayID) )
 	{ ?>
-		<div class="error"><p><strong>Failure:</strong> No DDay ID given. I guess I deleted nothing successfully.</p></div>
+		<div class="error"><p><strong><?php _e('Failure: ', 'wpdday');?></strong><?php _e('No DDay ID given. I guess I deleted nothing successfully.', 'wpdday');?></p></div>
 		<?php 
 	}
 	else
@@ -256,13 +267,13 @@ elseif ( $action == 'delete' )
 		if ( empty($result) || empty($result[0]->ddayID) )
 		{
 			?>
-			<div class="updated"><p>DDay <?php echo $ddayID;?> deleted successfully</p></div>
+			<div class="updated"><p><?php _e('This Dday is deleted successfully', 'wpdday');?></p></div>
 			<?php
 		}
 		else
 		{
 			?>
-			<div class="error"><p><strong>Failure:</strong> Ninjas proved my kung-fu to be too weak to delete that DDay.</p></div>
+			<div class="error"><p><strong><?php _e('Failure: ', 'wpdday');?></strong> <?php _e('Ninjas proved my kung-fu to be too weak to delete that DDay.', 'wpdday');?></p></div>
 			<?php
 		}		
 	}
@@ -272,7 +283,7 @@ elseif ( $action == 'publish' )
 	if ( empty($ddayID) )
 	{ 
 		?>
-		<div class="error"><p><strong>Failure:</strong> No DDay ID given.</p></div>
+		<div class="error"><p><strong><?php _e('Failure: ', 'wpdday');?></strong> <?php _e('No DDay ID given.', 'wpdday');?></p></div>
 		<?php 
 	}
 	else
@@ -281,7 +292,14 @@ elseif ( $action == 'publish' )
 		$wpdb->get_results($sql);	
 	
 			?>
-			<div class="updated"><p>DDay <?php echo $ddayID;?> now <?php if ($vis =='no') echo 'un'?>published.</p></div>
+			<div class="updated"><p>
+			<?php 
+			if ($vis =='no')
+			_e('This DDay is now unpublished.', 'wpdday');
+			else 
+			_e('This DDay is now published.', 'wpdday');
+			?>
+			</p></div>
 			<?php	
 	}
 }
@@ -299,7 +317,7 @@ if(isset($_GET['new_order']))
 	mysql_query($sql_tab) or die(mysql_error());
 	$rank++;}
 	?>
-	<div class="updated"><p>DDay are reordered.</p></div>
+	<div class="updated"><p><?php _e('Ddays are reordered.', 'wpdday');?></p></div>
 	<?php
 }
 //////////////   Heh.. I said manipulation ////////////////////
@@ -311,8 +329,9 @@ if(isset($_GET['new_order']))
 		<h2>Edit DDay</h2>
 		<?php
 		if ( empty($ddayID) )
-		{
-			echo "<div class=\"error\"><p>I didn't get a DDay identifier from the query string. Giving up...</p></div>";
+		{?>
+			<div class="error"><p><?php _e('I didn\'t get a DDay identifier from the query string. Giving up...', 'wpdday');?></p></div>;
+		<?php
 		}
 		else
 		{
@@ -321,20 +340,20 @@ if(isset($_GET['new_order']))
 	}
 	else
 	{ ?>
-		<h2>Manage DDay</h2>
+		<h2><?php _e('Manage DDay', 'wpdday');?></h2>
 		<?php wp_dday_display_list();?>
 		</div>
 		<div class="wrap">
-		<h2>Add DDay</h2>
+		<h2><?php _e('Add DDay', 'wpdday');?></h2>
 		<?php wp_dday_edit_form();?></div>
 		<div class="wrap">
-		<h2>Options and Usage</h2>
-		<h3><a href ="edit.php?page=dday/edit-dday.php&action=edit&ddayID=1">Edit Options</a></h3>
+		<h2><?php _e('Options and Usage', 'wpdday');?></h2>
+		<h3><a href ="edit.php?page=dday/edit-dday.php&action=edit&ddayID=1"><?php _e('Edit Options', 'wpdday');?></a></h3>
 		<ul>
-			<li>To embed the list of the dday active, use the function <b>&lt;?php wp_dday_list(); ?&gt;</b> in your sidebar or use the <b>Widget</b>.</li>
-			<li>You can find the ID of a DDay in Manage DDay at the right of the title [id]</li>
-			<li>To show specific DDay, use : <b>&lt;?php wp_dday(2);?&gt;</b> where 2 is your DDay id.</li>
-			<li>To embed a specific DDay in your post, use : <b>[dday=2]</b> where 2 is your DDay id.</li>
+			<li><?php _e('To embed the list of the dday active, use the function <b>&lt;?php wp_dday_list(); ?&gt;</b> in your sidebar or use the <b>Widget</b>', 'wpdday');?></li>
+			<li><?php _e('You can find the ID of a DDay in Manage DDay at the right of the title [id]', 'wpdday');?></li>
+			<li><?php _e('To show specific DDay, use : <b>&lt;?php wp_dday(2);?&gt;</b> where 2 is your DDay id.', 'wpdday');?></li>
+			<li><?php _e('To embed a specific DDay in your post, use : <b>[dday=2]</b> where 2 is your DDay id.', 'wpdday');?></li>
 		</ul>
 	<?php 
 	} ?>
@@ -356,14 +375,18 @@ function wp_dday_display_list()
 				echo ' : '.$dday->title; 
 				echo ' ['.$dday->ddayID.']'?>
 				<div class="edition">
-				<a href="edit.php?page=dday/edit-dday.php&amp;action=publish&amp;ddayID=<?php echo $dday->ddayID;?>&amp;vis=<?php if ($dday->visible=='no') echo 'yes'; else echo 'no'; ?>"><?php if ($dday->visible=='yes') echo 'Unp'; else echo 'P';?>ublish</a>
-				<a href="edit.php?page=dday/edit-dday.php&amp;action=edit&amp;ddayID=<?php echo $dday->ddayID;?>">Edit</a>
-				<a href="edit.php?page=dday/edit-dday.php&amp;action=delete&amp;ddayID=<?php echo $dday->ddayID;?>" onclick="return confirm('Are you sure you want to delete this dday?')">Delete></a>
+				<a href="edit.php?page=dday/edit-dday.php&amp;action=publish&amp;ddayID=<?php echo $dday->ddayID;?>&amp;vis=<?php if ($dday->visible=='no') echo 'yes'; else echo 'no'; ?>">
+				<?php if ($dday->visible=='yes') 
+				_e('Unpublish', 'wpdday');
+				else 
+				_e('Publish', 'wpdday');?> </a> 
+				<a href="edit.php?page=dday/edit-dday.php&amp;action=edit&amp;ddayID=<?php echo $dday->ddayID;?>"><?php _e('Edit', 'wpdday');?></a>
+				<a href="edit.php?page=dday/edit-dday.php&amp;action=delete&amp;ddayID=<?php echo $dday->ddayID;?>" onclick="return confirm('<?php _e('Are you sure you want to delete this dday?', 'wpdday');?>')"><?php _e('Delete', 'wpdday');?>></a>
 				</div>
 				</li>
             <?php } ?>
 			</ul>
-			<INPUT type="button" class="button bold" value="Save this Order &raquo;" onClick="go(Sortable.serialize('dday_list'))" style="margin-top: 10px"/>
+			<INPUT type="button" class="button bold" value="<?php _e('Save this Order', 'wpdday');?> &raquo;" onClick="go(Sortable.serialize('dday_list'))" style="margin-top: 10px"/>
 		<script type="text/javascript">
             Sortable.create('dday_list');
         </script>        
@@ -372,7 +395,7 @@ function wp_dday_display_list()
 	else
 	{
 		?>
-		<p>You haven't entered any DDay yet</p>
+		<p><?php _e('You haven\'t entered any DDay yet', 'wpdday');?></p>
 		<?php	
 	}
 }
@@ -387,8 +410,9 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 	{
 		// this next line makes me about 200 times cooler than you.
 		if ( intval($ddayID) != $ddayID )
-		{
-			echo "<div class=\"error\"><p>Bad Monkey! No banana!</p></div>";
+		{	
+			?><div class="error"><p>
+			<?php _e('Bad Monkey! No banana!', 'wpdday');?>"</p></div>";<?php
 			return;
 		}
 		else
@@ -396,7 +420,9 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 			$data = $wpdb->get_results("SELECT * FROM " . WP_DDAY_TABLE . " WHERE ddayID=".$ddayID);
 			if ( empty($data) )
 			{
-				echo "<div class=\"error\"><p>I couldn't find a DDay linked up with that identifier. Giving up...</p></div>";
+				?><div class="error"><p>
+				<?php _e('I couldn\'t find a DDay linked up with that identifier. Giving up...', 'wpdday');?>
+				</p></div>";<?php
 				return;
 			}
 			$data = $data[0];
@@ -414,11 +440,11 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 				{ ?>
 					<fieldset>
 						<div class="form-row">
-							<strong class="label">Title : </strong>
+							<strong class="label"><?php _e('Title : ', 'wpdday');?></strong>
 							<div class="field-widget"><input name="dd_title" id="dd_title" class="required" title="Enter a title" value="<?php if ( !empty($data) ) echo htmlspecialchars($data->title); ?>"/></div>
 						</div>
 						<div class="form-row">
-							<strong class="label">Date (D/M/Y H:M:S): </strong>
+							<strong class="label"><?php _e('Date (D/M/Y H:M:S): ', 'wpdday');?></strong>
 							<div class="field-widget"><input type="text" name="dd_day" id="dd_day" class="required validate-day" title="Day" size="1" value="<?php if ( !empty($data) ) echo date( 'd' , $data->date ); ?>"/></div>
 							<div class="field-widget"><input type="text" name="dd_month" id="dd_month" class="required validate-month" title="Month in DIGITS" size="1" value="<?php if ( !empty($data) ) echo date( 'm' , $data->date ); ?>" /></div>
 							<div class="field-widget"><input type="text" name="dd_year" id="dd_year" class="required validate-year" title="Year" size="3" value="<?php if ( !empty($data) ) echo date( 'Y' , $data->date ); ?>"/></div>
@@ -427,86 +453,86 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 							<div class="field-widget"><input type="text" name="dd_sec" id="dd_sec" class="validate-sec" title="Second" size="1" value="<?php if ( !empty($data) ) echo date( 's' , $data->date ); ?>"/></div>
 						</div>
 						<div class="form-row">
-							<strong class="label">URL : </strong>
+							<strong class="label"><?php _e('URL : ', 'wpdday');?></strong>
 							<div class="field-widget"><input name="dd_url" id="dd_url" class="validate-url" title="Enter an URL (optional)" value="<?php if ( !empty($data) ) echo htmlspecialchars($data->url); ?>"/></div>
 						</div>
 						<div class="form-row">
-							<strong class="label">Description : </strong>
+							<strong class="label"><?php _e('Description : ', 'wpdday');?></strong>
 							<div class="field-widget"><input name="dd_des" id="dd_des" class="" title="Enter a description (optional)" value="<?php if ( !empty($data) ) echo htmlspecialchars($data->des); ?>"/></div>
 						</div>
 						<div class="form-row">
-							<strong class="label">Repeat every : </strong>
+							<strong class="label"><?php _e('Repeat every : ', 'wpdday');?></strong>
 							<div class="field-widget">
 							<div class="field-widget"><input name="dd_frq_rpt" id="dd_frq_rpt" class="validate-number" title="Frequence of the repetition" value="<?php if ( !empty($data) ) echo htmlspecialchars($data->frq_rpt); ?>"/></div>
 								<select id="dd_rpt" name="dd_rpt" title="Choose your repeatition">
-									<option value="0" <?php if ( empty($data) || $data->rpt=='0' ) echo "selected" ?>>No</option>
-									<option value="1" <?php if ( $data->rpt=='1' ) echo "selected" ?>>Day</option>
-									<option value="2" <?php if ( $data->rpt=='2' ) echo "selected" ?>>Week</option>
-									<option value="3" <?php if ( $data->rpt=='3' ) echo "selected" ?>>Month</option>
-									<option value="4" <?php if ( $data->rpt=='4' ) echo "selected" ?>>Year</option>
+									<option value="0" <?php if ( empty($data) || $data->rpt=='0' ) echo "selected" ?>><?php _e('No', 'wpdday');?></option>
+									<option value="1" <?php if ( $data->rpt=='1' ) echo "selected" ?>><?php _e('Day', 'wpdday');?></option>
+									<option value="2" <?php if ( $data->rpt=='2' ) echo "selected" ?>><?php _e('Week', 'wpdday');?></option>
+									<option value="3" <?php if ( $data->rpt=='3' ) echo "selected" ?>><?php _e('Month', 'wpdday');?></option>
+									<option value="4" <?php if ( $data->rpt=='4' ) echo "selected" ?>><?php _e('Year', 'wpdday');?></option>
 								</select>
 							</div>
 						</div>
 						<div class="form-row">
-							<strong class="label">Show it before during : </strong>
-							<div class="field-widget"><input name="dd_nbr_jr_av" id="dd_nbr_jr_av" class="validate-number" title="Repeat every n unit" value="<?php if ( !empty($data) ) echo htmlspecialchars($data->nbr_jr_av); ?>"/> days <small>( 0 or nothing = infinite // -1 = No display )</small></div>
+							<strong class="label"><?php _e('Show it before during : ', 'wpdday');?></strong>
+							<div class="field-widget"><input name="dd_nbr_jr_av" id="dd_nbr_jr_av" class="validate-number" title="Repeat every n unit" value="<?php if ( !empty($data) ) echo htmlspecialchars($data->nbr_jr_av); ?>"/> <?php _e('days', 'wpdday');?> <small>( <?php _e( '0 or nothing = infinite // -1 = No display', 'wpdday');?> )</small></div>
 						</div>
 						<div class="form-row">
-							<strong class="label">Show it after during : </strong>
-							<div class="field-widget"><input name="dd_nbr_jr_ap" id="dd_nbr_jr_ap" class="validate-number validate-frq-rpt" title="Repeat every n unit" value="<?php if ( !empty($data) ) echo htmlspecialchars($data->nbr_jr_ap); ?>"/> days <small>( 0 or nothing = infinite // -1 = No display )</small></div>
+							<strong class="label"><?php _e('Show it after during : ', 'wpdday');?></strong>
+							<div class="field-widget"><input name="dd_nbr_jr_ap" id="dd_nbr_jr_ap" class="validate-number validate-frq-rpt" title="Repeat every n unit" value="<?php if ( !empty($data) ) echo htmlspecialchars($data->nbr_jr_ap); ?>"/> <?php _e('days', 'wpdday');?> <small>( <?php _e('0 or nothing = infinite // -1 = No display', 'wpdday');?> )</small></div>
 						</div>
-						<a onclick="Effect.toggle('format-sup','blind');;return false" href="#1">More options</a>
+						<a onclick="Effect.toggle('format-sup','blind');;return false" href="#1"><?php _e('More options', 'wpdday');?></a>
 					<div id="format-sup" <?php if (($mode == 'add') or (empty($data->past) and empty($data->yester) and empty($data->tod) and empty($data->imm)and empty($data->tom) and empty($data->futur))) {echo 'style="display:none"';}?>>
 						<?php if (($ddayID) != 1) 
 				;} ?>
-						<h3>Format for past events :</h3>
+						<h3><?php _e('Format for past events :', 'wpdday');?></h3>
 						<div class="form-row">
-							<div class="label"><strong>For 2 days or more : </strong><br/><small>Ex : TITLE% for %DELAY_DAY% days</small></div>
+							<div class="label"><strong><?php _e('For 2 days or more', 'wpdday');?> : </strong><br/><small>Ex : TITLE% for %DELAY_DAY% days</small></div>
 							<div class="field-widget"><textarea name="dd_past" id="dd_past" cols=45 rows=3 ><?php if ( !empty($data) ) echo htmlspecialchars($data->past); ?></textarea></div>
 						</div>
 						<div class="form-row">
-							<div class="label"><strong>Since yesterday : </strong><br/><small>Ex : %TITLE% yesterday</small></div>
+							<div class="label"><strong><?php _e('Since yesterday', 'wpdday');?> : </strong><br/><small>Ex : %TITLE% yesterday</small></div>
 							<div class="field-widget"><textarea name="dd_yester" id="dd_yester" cols=45 rows=3 ><?php if ( !empty($data) ) echo htmlspecialchars($data->yester); ?></textarea></div>
 						</div>
 						<div class="form-row">
-							<div class="label"><strong>Since today : </strong><br/><small>Ex : "%TITLE% today</small></div>
+							<div class="label"><strong><?php _e('Since today', 'wpdday');?> : </strong><br/><small>Ex : "%TITLE% today</small></div>
 							<div class="field-widget"><textarea name="dd_tod" id="dd_tod" cols=45 rows=3 ><?php if ( !empty($data) ) echo htmlspecialchars($data->tod); ?></textarea></div>
 						</div>
-						<h3>Format for futures events :</h3>
+						<h3><?php _e('Format for futures events', 'wpdday');?> :</h3>
 						<div class="form-row">
-							<div class="label"><strong>Imminent : </strong><br/><small>Ex : %TITLE% today in %DELAY_HR%h%DELAY_MIN%</small></div>
+							<div class="label"><strong><?php _e('Imminent', 'wpdday');?> : </strong><br/><small>Ex : %TITLE% today in %DELAY_HR%h%DELAY_MIN%</small></div>
 							<div class="field-widget"><textarea name="dd_imm" id="dd_imm" cols=45 rows=3 ><?php if ( !empty($data) ) echo htmlspecialchars($data->imm); ?></textarea></div>
 						</div>
 						<div class="form-row">
-							<div class="label"><strong>Tomorrow : </strong><br/><small>Ex : %TITLE% tomorrow</small></div>
+							<div class="label"><strong><?php _e('Tomorrow', 'wpdday');?> : </strong><br/><small>Ex : %TITLE% tomorrow</small></div>
 							<div class="field-widget"><textarea name="dd_tom" id="dd_tom" cols=45 rows=3 ><?php if ( !empty($data) ) echo htmlspecialchars($data->tom); ?></textarea></div>
 						</div>
 						<div class="form-row">
-							<div class="label"><strong>In 2 days or more : </strong><br/><small>Ex : %TITLE% in %DELAY_DAY% days</small></div>
+							<div class="label"><strong><?php _e('In 2 days or more', 'wpdday');?> : </strong><br/><small>Ex : %TITLE% in %DELAY_DAY% days</small></div>
 							<div class="field-widget"><textarea name="dd_futur" id="dd_futur" cols=45 rows=3 ><?php if ( !empty($data) ) echo htmlspecialchars($data->futur); ?></textarea></div>
 						</div>
-						<h3>Note :</h3>
+						<h3><?php _e('Note', 'wpdday');?> :</h3>
 						<ul>
-						<li><b>%TITLE%</b> will be replace by the title</li>
-						<li><b>%DELAY_DAY%</b> will be replace by the delay in days</li>			
-						<li>Only for imminent events <b>%DELAY_HR%</b> will be replace by the delay in hours and <b>%DELAY_MIN%</b> by the delay in minutes</li>
+						<li><?php _e('<b>%TITLE%</b> will be replace by the title', 'wpdday');?></li>
+						<li><?php _e('<b>%DELAY_DAY%</b> will be replace by the delay in days', 'wpdday');?></li>			
+						<li><?php _e('Only for imminent events <b>%DELAY_HR%</b> will be replace by the delay in hours and <b>%DELAY_MIN%</b> by the delay in minutes', 'wpdday');?></li>
 						<ul>
 					</div>
 					<?php if (($ddayID) != 1) 
 				{ ?>
 						<div class="form-row">
-							<strong >Visible : </strong>
+							<strong ><?php _e('Visible : ', 'wpdday');?></strong>
 							<div class="field-widget">
 								<select id="dd_visible" name="dd_visible" title="Choose your repeatition">
-									<option value="yes" <?php if ( empty($data) || $data->visible=='yes' ) echo "selected" ?>>Yes</option>
-									<option value="no" <?php if ( !empty($data) && $data->visible=='no' ) echo "selected" ?>>No</option>
+									<option value="yes" <?php if ( empty($data) || $data->visible=='yes' ) echo "selected" ?>><?php _e('Yes', 'wpdday');?></option>
+									<option value="no" <?php if ( !empty($data) && $data->visible=='no' ) echo "selected" ?>><?php _e('No', 'wpdday');?></option>
 								</select>
 							</div>
 						</div>
 			<?php if (($ddayID) != 1) 
 				;} ?>						
 					</fieldset>
-				<input type="submit" name="save" class="button bold" value="Save &raquo;" />
+				<input type="submit" name="save" class="button bold" value="<?php _e('Save', 'wpdday');?> &raquo;" />
 			</div>
 			<div style="clear:both; height:1px;">&nbsp;</div>
 		</div>
@@ -517,31 +543,31 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 		}
 		var valid = new Validation('ddayform', {immediate : true, onFormValidate : formCallback});
 		Validation.addAllThese([
-		['validate-day', 'Day : 1 to 31', {
+		['validate-day', '<?php _e('Day : 1 to 31', 'wpdday');?>', {
 		mini : 1,
 		maxi : 31
 		}],
-		['validate-month', 'Month in DIGIT : 1 to 12', {
+		['validate-month', '<?php _e('Month in DIGIT : 1 to 12', 'wpdday');?>', {
 		mini : 1,
 		maxi : 12
 		}],
-		['validate-year', 'Year : 1970 to 2040', {
+		['validate-year', '<?php _e('Year : 1970 to 2040', 'wpdday');?>', {
 		mini : 1970,
 		maxi : 2040
 		}],
-		['validate-hour', 'Hour : 0 to 23', {
+		['validate-hour', '<?php _e('Hour : 0 to 23', 'wpdday');?>', {
 		mini : 0,
 		maxi : 23
 		}],
-		['validate-min', 'Min: 0 to 59', {
+		['validate-min', '<?php _e('Min: 0 to 59', 'wpdday');?>', {
 		mini : 0,
 		maxi : 59
 		}],
-		['validate-sec', 'Sec : 0 to 59', {
+		['validate-sec', '<?php _e('Sec : 0 to 59', 'wpdday');?>', {
 		mini : 0,
 		maxi : 59
 		}],
-		['validate-frq-rpt', 'Show it before + Show it after must be <= Period of repetition in days (frq * unit)', function(){
+		['validate-frq-rpt', '<?php _e("Show it before + Show it after must be <= Period of repetition in days (frq * unit)", "wpdday");?>', function(){
 		var elm = $('dd_rpt');
 		var selection = elm.selectedIndex;
 		if (selection == 0)	{return true;}
