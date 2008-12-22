@@ -27,8 +27,8 @@ $debugText = '';
 $messages = '';
 
 echo '<link rel="stylesheet" href="'.get_option('siteurl').'/wp-content/plugins/dday/script/style.css" type="text/css" media="screen" />'."\n";
-echo '<script src="'.get_option('siteurl').'/wp-content/plugins/dday/script/scriptaculous/lib/prototype.js" type="text/javascript"></script>';
-echo '<script src="'.get_option('siteurl').'/wp-content/plugins/dday/script/scriptaculous/src/scriptaculous.js?load=effects,dragdrop" type="text/javascript"></script>';
+echo '<script src="'.get_option('siteurl').'/wp-includes/js/scriptaculous/prototype.js" type="text/javascript"></script>';
+echo '<script src="'.get_option('siteurl').'/wp-includes/js/scriptaculous/scriptaculous.js?load=effects,dragdrop" type="text/javascript"></script>';
 echo '<script src="'.get_option('siteurl').'/wp-content/plugins/dday/script/validation.js" type="text/javascript"></script>';
 ?>		<script type="text/javascript">
 		function go(expr) {
@@ -441,7 +441,7 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 					<fieldset>
 						<div class="form-row">
 							<strong class="label"><?php _e('Title : ', 'wpdday');?></strong>
-							<div class="field-widget"><input name="dd_title" id="dd_title" class="required" title="Enter a title" value="<?php if ( !empty($data) ) echo htmlspecialchars($data->title); ?>"/></div>
+							<div class="field-widget"><textarea name="dd_title" id="dd_title" class="required" title="Enter a title" cols=45 rows=3><?php if ( !empty($data) ) echo htmlspecialchars($data->title); ?> </textarea></div>
 						</div>
 						<div class="form-row">
 							<strong class="label"><?php _e('Date (D/M/Y H:M:S): ', 'wpdday');?></strong>
@@ -454,11 +454,11 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 						</div>
 						<div class="form-row">
 							<strong class="label"><?php _e('URL : ', 'wpdday');?></strong>
-							<div class="field-widget"><input name="dd_url" id="dd_url" class="validate-url" title="Enter an URL (optional)" value="<?php if ( !empty($data) ) echo htmlspecialchars($data->url); ?>"/></div>
+							<div class="field-widget"><textarea name="dd_url" id="dd_url" class="validate-url" title="Enter an URL (optional)" cols=45 rows=2><?php if ( !empty($data) ) echo htmlspecialchars($data->url); ?></textarea></div>
 						</div>
 						<div class="form-row">
 							<strong class="label"><?php _e('Description : ', 'wpdday');?></strong>
-							<div class="field-widget"><input name="dd_des" id="dd_des" class="" title="Enter a description (optional)" value="<?php if ( !empty($data) ) echo htmlspecialchars($data->des); ?>"/></div>
+							<div class="field-widget"><textarea name="dd_des" id="dd_des" class="" title="Enter a description (optional)" cols=45 rows=3><?php if ( !empty($data) ) echo htmlspecialchars($data->des); ?></textarea></div>
 						</div>
 						<div class="form-row">
 							<strong class="label"><?php _e('Repeat every : ', 'wpdday');?></strong>
@@ -513,9 +513,10 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 						</div>
 						<h3><?php _e('Note', 'wpdday');?> :</h3>
 						<ul>
-						<li><?php _e('<b>%TITLE%</b> will be replace by the title', 'wpdday');?></li>
-						<li><?php _e('<b>%DELAY_DAY%</b> will be replace by the delay in days', 'wpdday');?></li>			
-						<li><?php _e('Only for imminent events <b>%DELAY_HR%</b> will be replace by the delay in hours and <b>%DELAY_MIN%</b> by the delay in minutes', 'wpdday');?></li>
+						<li><?php _e('<b>%TITLE%</b> will be replaced by the title', 'wpdday');?></li>
+						<li><?php _e('<b>%DELAY_DAY%</b> will be replaced by the delay in days', 'wpdday');?></li>
+						<li><?php _e('Only for imminent events <b>%DELAY_HR%</b> will be replaced by the delay in hours and <b>%DELAY_MIN%</b> by the delay in minutes', 'wpdday');?></li>
+						<li><?php _e('For Title, Description and Format : <b>%DATE%</b> will be replaced by d/m/y. <b>%DATEandHOUR%</b> adds h:m:s', 'wpdday');?></li>
 						<ul>
 					</div>
 					<?php if (($ddayID) != 1) 
