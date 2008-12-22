@@ -2,7 +2,7 @@
 /*
 Author: Mdkart
 Author URI: http:/mdkart.fr
-Description: Admin tool for the Dday plugin.
+Description: Admin tool for Dday plugin.
 */
 // Localisation
 load_plugin_textdomain('wpdday', 'wp-content/plugins/dday/languages');
