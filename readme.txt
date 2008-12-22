@@ -1,7 +1,7 @@
 === DDAy ===
 Tags: events, countdown, date, widget
 Requires at least: 1.5
-Tested up to: 2.5
+Tested up to: 2.7
 Stable tag: trunk
 
 This plugin allow to associate a countdown to events.
@@ -60,10 +60,16 @@ So this plugin is very interesting for major (or minor) events of the life, birt
 
 * Now can be localized
 
+*0.3.5*
+
+* Fix some things for WP 2.7
+* Adds a filter %DATE% and %DATEandHOUR% for display formatting
+
    
 *ToDo*
 
 * Choice of unit of the countdown more flexible
+* Color of the event depending on the greater or lesser period until the event.
 * Correction of eventual bugs
 * IE Admin Friendly
 
