@@ -5,19 +5,12 @@ Plugin URI: http://mdkart.fr/blog/2007/04/16/plugin-dday-pour-wordpress
 Description: This plugin allows you to display DDay's. It also has a spiffy management tool in the administrative console. Fully customizable. 
 Author: Mdkart
 Author URI: http://mdkart.fr
-Version: 0.3.5
+Version: 0.3.6
 Put in /wp-content/plugins/dday/ of your Wordpress installation
 Inpsired by :
 - DDay plugin by Franck Paul for Dotclear : http://franck.paul.free.fr/dotclear/?2005/03/22/105-plugin-jour-j
 - Code of Wp-quotes by zombierobot : http://www.zombierobot.com/wp-quotes/
 - Code of Wp-Polls by zombierobot  : http://www.lesterchan.net/wordpress/readme/wp-polls.html
-
-New in 0.2
-- -1 in display before and after => No display
-- Widget
-- 1 bug fixed Fonction : drag and drope
-- Some improvement in the code 
-- Nice tooltip : can be de-activate easilly
 */
 
 //Can be modified
@@ -83,7 +76,7 @@ function countdown($ddayID, $option)
 	if (empty ($format_futur)) {$format_futur =  $option_var->futur;}
 	
 	// get current unix timestamp
-	$today = current_time(timestamp, $gmt = 1);
+	$today = current_time(timestamp, 0);
 	if ($rpt == 1 or $rpt == 2 or $rpt == 3 or $rpt == 4)
 		{
 		if ($rpt==1) {$unit = "day";} 
@@ -94,14 +87,14 @@ function countdown($ddayID, $option)
 		if ($today >= ($date+24*60*60*$nbr_jr_ap)) 
 			{
 			do 	{
-				$date = strtotime(date("Y-m-d H:i:s", $date).$offset);
+				$date = strtotime(gmdate("Y-m-d H:i:s", $date).$offset);
 				} 
 			while ($today >= ($date+24*60*60*$nbr_jr_ap));	
 			}
 		}
 		
-	$date_day = strtotime(date("Y-m-d 0:0:0", $date));
-	$today_day = strtotime(date("Y-m-d 0:0:0", $today));
+	$date_day = strtotime(gmdate("Y-m-d 0:0:0", $date));
+	$today_day = strtotime(gmdate("Y-m-d 0:0:0", $today));
 	$delay_day = round(($date_day - $today_day) / 24 / 60 / 60);
 	$delay = $date - $today; // In seconds
 	$signe = ($delay >= 0 ? 1 : -1);	
@@ -136,7 +129,7 @@ function countdown($ddayID, $option)
 		if ($des <> '') {
 		$item_list .= $des.' : ';
 		}
-		$item_list .= date ( "d/m/Y H:i:s" , $date ).'" class="dday-title">';
+		$item_list .= gmdate ( "d/m/Y H:i:s" , $date ).'" class="dday-title">';
 		switch (true) {
 			case ($delay_day < -1):
 			# C'etait avant-hier ou encore avant
@@ -179,8 +172,8 @@ function countdown($ddayID, $option)
 			break;
 			}
 			# Fin de l'URL
-			$item_list = str_replace("%DATEandHOUR%", date("d/m/Y H:i:s" , $date), $item_list);
-			$item_list = str_replace("%DATE%", date("d/m/Y" , $date), $item_list);
+			$item_list = str_replace("%DATEandHOUR%", gmdate("d/m/Y H:i:s" , $date), $item_list);
+			$item_list = str_replace("%DATE%", gmdate("d/m/Y" , $date), $item_list);
 			if ($url <> '') {
 				$item_list .= '</a>';
 			}else $item_list .= '</span>';			
