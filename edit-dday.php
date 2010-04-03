@@ -7,11 +7,9 @@ Description: Admin tool for the Dday plugin.
 // Localisation
 load_plugin_textdomain('wpdday', 'wp-content/plugins/dday/languages');
 
-
 ### Variables Variables Variables
 $base_name = plugin_basename('dday/edit-dday.php');
 $base_page = 'edit.php?page='.$base_name;
-
 
 $edit = $create = $save = $delete = false;
 
@@ -146,7 +144,7 @@ if ( $action == 'add' )
 	if ($hour == 0) { $hour = 0;}
 	if ($min == 0) { $min = 0;}
 	if ($sec == 0) { $sec = 0;}
-	$timestamp = mktime($hour, $min, $sec, $month, $day, $year);
+	$timestamp = gmmktime($hour, $min, $sec, $month, $day, $year);
 	$sql = "INSERT INTO " . WP_DDAY_TABLE . " SET title='" . mysql_escape_string($title)
 		 . "', url='" . mysql_escape_string($url) . "', date='" .$timestamp
 		 . "', nbr_jr_av='" .$nbr_jr_av . "', nbr_jr_ap='" .$nbr_jr_ap
@@ -222,7 +220,7 @@ elseif ( $action == 'edit_save' )
 	{	if ($hour == 0) { $hour = 0;}
 		if ($min == 0) { $min = 0;}
 		if ($sec == 0) { $sec = 0;}
-		$timestamp = mktime($hour, $min, $sec, $month, $day, $year);
+		$timestamp = gmmktime($hour, $min, $sec, $month, $day, $year);
 		$sql = "UPDATE " . WP_DDAY_TABLE . " SET title='" . mysql_escape_string($title)	     
 		  . "', url='" . mysql_escape_string($url) . "', date='" .$timestamp
 		 . "', nbr_jr_av='" .$nbr_jr_av . "', nbr_jr_ap='" .$nbr_jr_ap
@@ -445,12 +443,12 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 						</div>
 						<div class="form-row">
 							<strong class="label"><?php _e('Date (D/M/Y H:M:S): ', 'wpdday');?></strong>
-							<div class="field-widget"><input type="text" name="dd_day" id="dd_day" class="required validate-day" title="Day" size="1" value="<?php if ( !empty($data) ) echo date( 'd' , $data->date ); ?>"/></div>
-							<div class="field-widget"><input type="text" name="dd_month" id="dd_month" class="required validate-month" title="Month in DIGITS" size="1" value="<?php if ( !empty($data) ) echo date( 'm' , $data->date ); ?>" /></div>
-							<div class="field-widget"><input type="text" name="dd_year" id="dd_year" class="required validate-year" title="Year" size="3" value="<?php if ( !empty($data) ) echo date( 'Y' , $data->date ); ?>"/></div>
-							<div class="field-widget"><input type="text" name="dd_hour" id="dd_hour" class="validate-hour" title="Hour" size="1" value="<?php if ( !empty($data) ) echo date( 'H' , $data->date ); ?>"/></div>
-							<div class="field-widget"><input type="text" name="dd_min" id="dd_min" class="validate-min" title="Minute" size="1" value="<?php if ( !empty($data) ) echo date( 'i' , $data->date ); ?>"/></div>
-							<div class="field-widget"><input type="text" name="dd_sec" id="dd_sec" class="validate-sec" title="Second" size="1" value="<?php if ( !empty($data) ) echo date( 's' , $data->date ); ?>"/></div>
+							<div class="field-widget"><input type="text" name="dd_day" id="dd_day" class="required validate-day" title="Day" size="1" value="<?php if ( !empty($data) ) echo gmdate( 'd' , $data->date ); ?>"/></div>
+							<div class="field-widget"><input type="text" name="dd_month" id="dd_month" class="required validate-month" title="Month in DIGITS" size="1" value="<?php if ( !empty($data) ) echo gmdate( 'm' , $data->date ); ?>" /></div>
+							<div class="field-widget"><input type="text" name="dd_year" id="dd_year" class="required validate-year" title="Year" size="3" value="<?php if ( !empty($data) ) echo gmdate( 'Y' , $data->date ); ?>"/></div>
+							<div class="field-widget"><input type="text" name="dd_hour" id="dd_hour" class="validate-hour" title="Hour" size="1" value="<?php if ( !empty($data) ) echo gmdate( 'H' , $data->date ); ?>"/></div>
+							<div class="field-widget"><input type="text" name="dd_min" id="dd_min" class="validate-min" title="Minute" size="1" value="<?php if ( !empty($data) ) echo gmdate( 'i' , $data->date ); ?>"/></div>
+							<div class="field-widget"><input type="text" name="dd_sec" id="dd_sec" class="validate-sec" title="Second" size="1" value="<?php if ( !empty($data) ) echo gmdate( 's' , $data->date ); ?>"/></div>
 						</div>
 						<div class="form-row">
 							<strong class="label"><?php _e('URL : ', 'wpdday');?></strong>
