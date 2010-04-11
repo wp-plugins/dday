@@ -3,7 +3,7 @@
 Plugin Name: DDay Widget
 Plugin URI: http://mdkart.fr/blog/2007/04/16/plugin-dday-pour-wordpress
 Description: Adds a Sidebar Widget To Display DDays From DDay Plugin. You Need To Activate DDay First.
-Version: 0.3.6
+Version: 0.3.7
 Author: Mdkart
 Author URI: http://mdkart.fr
 
