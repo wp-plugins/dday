@@ -1,6 +1,6 @@
 === DDay ===
 Contributors: Mdkart
-Tags: events, countdown, date, widget
+Tags: event, countdown, date, widget
 Requires at least: 1.5
 Tested up to: 2.9.2
 Stable tag: trunk
@@ -36,6 +36,10 @@ So this plugin is very interesting for major (or minor) events of the life, birt
 In wp-dday.php search $nice_tooltip (l.29) and put him to 0 ( $nice_tooltip = 0;)
 
 == Changelog==
+= 0.3.8 =
+
+* Fix some bugs on WP3.0 with Scriptaculous and Prototype on the admin page
+* Widget is now merged in the code of wp-dday.php so there is only one plugin to activate.
 
 = 0.3.7 =
 
