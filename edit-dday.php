@@ -25,8 +25,10 @@ $debugText = '';
 $messages = '';
 
 echo '<link rel="stylesheet" href="'.get_option('siteurl').'/wp-content/plugins/dday/script/style.css" type="text/css" media="screen" />'."\n";
-echo '<script src="'.get_option('siteurl').'/wp-includes/js/scriptaculous/prototype.js" type="text/javascript"></script>';
-echo '<script src="'.get_option('siteurl').'/wp-includes/js/scriptaculous/scriptaculous.js?load=effects,dragdrop" type="text/javascript"></script>';
+echo '<script src="'.get_option('siteurl').'/wp-includes/js/prototype.js" type="text/javascript"></script>';
+echo '<script src="'.get_option('siteurl').'/wp-includes/js/scriptaculous/scriptaculous.js" type="text/javascript"></script>';
+echo '<script src="'.get_option('siteurl').'/wp-includes/js/scriptaculous/effects.js" type="text/javascript"></script>';
+echo '<script src="'.get_option('siteurl').'/wp-includes/js/scriptaculous/dragdrop.js" type="text/javascript"></script>';
 echo '<script src="'.get_option('siteurl').'/wp-content/plugins/dday/script/validation.js" type="text/javascript"></script>';
 ?>		<script type="text/javascript">
 		function go(expr) {
