@@ -2,7 +2,7 @@
 Contributors: Mdkart
 Tags: event, countdown, date, widget
 Requires at least: 1.5
-Tested up to: 2.9.2
+Tested up to: 3
 Stable tag: trunk
 
 This plugin allow to associate a countdown to events.
