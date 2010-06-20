@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: DDay
-Plugin URI: http://mdkart.fr/blog/2007/04/16/plugin-dday-pour-wordpress
+Plugin URI: http://mdkart.fr/blog/plugin-dday-pour-wordpress
 Description: This plugin allows you to display DDay's. It also has a spiffy management tool in the administrative console. Fully customizable. 
 Author: Mdkart
-Author URI: http://mdkart.fr
-Version: 0.3.7
+Author URI: http://mdkart.fr/
+Version: 0.3.9
 Put in /wp-content/plugins/dday/ of your Wordpress installation
 Inpsired by :
 - DDay plugin by Franck Paul for Dotclear : http://franck.paul.free.fr/dotclear/?2005/03/22/105-plugin-jour-j
@@ -26,6 +26,11 @@ function wp_dday_admin_menu()
 	}
 add_action('admin_menu', 'wp_dday_admin_menu');
 
+
+### Function: Load The WP-Polls Widget
+add_action('plugins_loaded', 'widget_dday_init');
+
+### Nice tooltip display
 if ($nice_tooltip == 1)
 {
 add_action('wp_head', 'dday_header');
@@ -35,6 +40,7 @@ function dday_header() {
 	echo '<script type="text/javascript" src="'.get_option('siteurl').'/wp-content/plugins/dday/script/qTip.js"></script>'."\n";
 	}
 }	
+
 ### Recupere les valeurs d'options	
 function countdown($ddayID, $option)
 {	global $wpdb;
@@ -180,6 +186,7 @@ function countdown($ddayID, $option)
 	}
 	return $item_list;
 }
+
 function wp_dday_list()
 { global $wpdb;
 	echo '<ul class=\'dday\'>';
@@ -226,5 +233,44 @@ function wp_dday($ddayID)
 		return;
 	}		
 	echo countdown($ddayID, $option);
+}
+
+function widget_dday_init() {
+    if (!function_exists('register_sidebar_widget')) {
+        return;
+    }
+
+    ### Function: WP-Polls Widget
+    function widget_dday($args) {
+        extract($args);        
+        if (function_exists('wp_dday_list')) {
+            $options = get_option('widget_dday');
+            $title = empty($options['title']) ? 'DDay' : $options['title']; 
+            echo $before_widget; 
+            echo $before_title . $title . $after_title;
+            wp_dday_list();
+            echo $after_widget;
+        }        
+    }
+    
+    function widget_dday_control() {
+		$options = $newoptions = get_option('widget_dday');
+		if ( $_POST["dday-submit"] ) {
+		$newoptions['title'] = strip_tags(stripslashes($_POST["dday-title"]));
+		}
+		if ( $options != $newoptions ) {
+		$options = $newoptions;
+		update_option('widget_dday', $options);
+		}
+		$title = attribute_escape($options['title']);
+        ?> 
+		<p><label for="dday-title"><?php _e('Title:'); ?> <input style="width: 250px;" id="dday-title" name="dday-title" type="text" value="<?php echo $title; ?>" /></label></p>
+		<input type="hidden" id="dday-submit" name="dday-submit" value="1" />
+        <?php 
+    }
+
+    // Register Widgets
+    register_sidebar_widget('DDay', 'widget_dday');
+    register_widget_control('DDay', 'widget_dday_control');
 }
 ?>
