@@ -2,7 +2,7 @@
 Contributors: Mdkart
 Tags: event, countdown, date, widget
 Requires at least: 1.5
-Tested up to: 2.9.2
+Tested up to: 3.0
 Stable tag: trunk
 
 This plugin allow to associate a countdown to events.
@@ -36,6 +36,10 @@ So this plugin is very interesting for major (or minor) events of the life, birt
 In wp-dday.php search $nice_tooltip (l.29) and put him to 0 ( $nice_tooltip = 0;)
 
 == Changelog==
+= 0.3.9 =
+
+* DDay-Widget was not fully deleted in 0.3.8
+
 = 0.3.8 =
 
 * Fix some bugs on WP3.0 with Scriptaculous and Prototype on the admin page
