@@ -2,7 +2,7 @@
 Contributors: Mdkart
 Tags: event, countdown, date, widget
 Requires at least: 1.5
-Tested up to: 3.0
+Tested up to: 3.0.1
 Stable tag: trunk
 
 This plugin allow to associate a countdown to events.
@@ -36,6 +36,10 @@ So this plugin is very interesting for major (or minor) events of the life, birt
 In wp-dday.php search $nice_tooltip (l.29) and put him to 0 ( $nice_tooltip = 0;)
 
 == Changelog==
+= 0.4.0 =
+
+* Small modification suggested by Dric ( http://www.driczone.net/blog ) to reduce the number of queries to the database.
+
 = 0.3.9 =
 
 * DDay-Widget was not fully deleted in 0.3.8
@@ -51,7 +55,7 @@ In wp-dday.php search $nice_tooltip (l.29) and put him to 0 ( $nice_tooltip = 0;
 
 = 0.3.6 =
 
-* Fix of an error with Daylight saing time and offset timezone. The problem came from an inadequation between GMT and the time of the server causing errors when changing DST, timezone or server. Now all the dates are coded in GMT so there should be no problem with it anymore. But the dates saved before this upgrade may lagged by an error of some hours. You will need to fix them manually (just go in the admin of DDay and edit the time of these ddays to what you want it is). I am very sorry for this inconvenience.
+* Fix of an error with Daylight saving time and offset timezone. The problem came from an inadequation between GMT and the time of the server causing errors when changing DST, timezone or server. Now all the dates are coded in GMT so there should be no problem with it anymore. But the dates saved before this upgrade may lagged by an error of some hours. You will need to fix them manually (just go in the admin of DDay and edit the time of these ddays to what you want it is). I am very sorry for this inconvenience.
 
 = 0.3.5 =
 
