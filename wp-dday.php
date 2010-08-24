@@ -5,7 +5,7 @@ Plugin URI: http://mdkart.fr/blog/plugin-dday-pour-wordpress
 Description: This plugin allows you to display DDay's. It also has a spiffy management tool in the administrative console. Fully customizable. 
 Author: Mdkart
 Author URI: http://mdkart.fr/
-Version: 0.3.9
+Version: 0.4.0
 Put in /wp-content/plugins/dday/ of your Wordpress installation
 Inpsired by :
 - DDay plugin by Franck Paul for Dotclear : http://franck.paul.free.fr/dotclear/?2005/03/22/105-plugin-jour-j
@@ -42,21 +42,28 @@ function dday_header() {
 }	
 
 ### Recupere les valeurs d'options	
-function countdown($ddayID, $option)
+function countdown($ddayID, $option, $data='')
 {	global $wpdb;
 	$item_list = '';
-	$data = false;	
+	//$data = false;	
 	if ( $ddayID !== false )
 	{
 		if ( intval($ddayID) != $ddayID )
 		{	return "<div class=\"error\"><p>Bad Monkey! No banana!</p></div>";
-		}
-		else
-		{	$data = $wpdb->get_results("SELECT * FROM " . WP_DDAY_TABLE . " WHERE ddayID=".$ddayID);
-			if ( empty($data) )
-			{	return "<div class=\"error\"><p>I couldn't find a DDay linked up with that identifier. Giving up...</p></div>";
+		}else{	
+      if ($data==''){
+        $data = $wpdb->get_results("SELECT * FROM " . WP_DDAY_TABLE . " WHERE ddayID=".$ddayID);
+			  if ( empty($data) )
+			   {	return "<div class=\"error\"><p>I couldn't find a DDay linked up with that identifier. Giving up...</p></div>";
+			  }
 			}
-			$data = $data[0];}	
+			foreach ( $data as $datai )
+		  { 	
+        if ($datai->ddayID == $ddayID){
+          $data = $datai;
+        }
+      }
+    }
 	}
 	$title = $data->title;
 	$date = $data->date;
@@ -190,7 +197,7 @@ function countdown($ddayID, $option)
 function wp_dday_list()
 { global $wpdb;
 	echo '<ul class=\'dday\'>';
-	$ddays = $wpdb->get_results("SELECT ddayID FROM " . WP_DDAY_TABLE . " WHERE ddayID != 1 AND visible='yes' ORDER BY RANK");
+	$ddays = $wpdb->get_results("SELECT * FROM " . WP_DDAY_TABLE . " WHERE ddayID != 1 AND visible='yes' ORDER BY RANK");
 	$option = $wpdb->get_results("SELECT * FROM " . WP_DDAY_TABLE . " WHERE ddayID=1");
 	if ( empty($option) )
 	{	echo "<div class=\"error\"><p>I couldn't find a dday linked up with the options...</p></div>";
@@ -199,7 +206,7 @@ function wp_dday_list()
 	if ( !empty($ddays) )
 	{	foreach ( $ddays as $dday )
 		{ 	$ddayID = $dday->ddayID;
-			$result = countdown($ddayID, $option);
+			$result = countdown($ddayID, $option, $ddays);
 			if ( !empty($result) )
 			{	echo '<li>'.$result.'</li>';
 			}
