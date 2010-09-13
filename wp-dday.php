@@ -14,7 +14,7 @@ Inpsired by :
 */
 
 //Can be modified
-$nice_tooltip = 2; // 0 -> No effect, 1 -> Enable nice tootltip when mouse over a DDay, 2 -> Better if you've already jQuery loaded in your page 
+$nice_tooltip = 1; // 0 -> No effect, 1 -> Enable nice tootltip when mouse over a DDay, 2 -> Better if you've already jQuery loaded in your page 
 
 ### DDay Table Name
 define('WP_DDAY_TABLE', $table_prefix . 'dday');
