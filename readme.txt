@@ -34,12 +34,13 @@ So this plugin is very interesting for major (or minor) events of the life, birt
 
 = You can configure Nice tooltip on mouseover a DDay : =
 In wp-dday.php search $nice_tooltip (l.17) :
+
 * 0 = De-activated
 * 1 = activated without jQuery required
 * 2 = activated with jQuery required. Bettter if your theme or one of your extensions uses already jQuery
 
 == Changelog==
-= 0.4.1 =
+= 0.4.2 =
 
 * Added an another script of nice tooltip : better when jQuery is already used by your theme or by one of your extensions
 * Improve script and style injection to be coherent with WP
