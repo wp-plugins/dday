@@ -32,10 +32,19 @@ So this plugin is very interesting for major (or minor) events of the life, birt
 1. Add DDays and modify the order with the drag and drop function.
 1. Insert with the Widget or use wp_dday_list() to display the list of all active DDays or use the widget
 
-= For deactivate Nice tooltip on mouseover a DDay : =
-In wp-dday.php search $nice_tooltip (l.29) and put him to 0 ( $nice_tooltip = 0;)
+= You can configure Nice tooltip on mouseover a DDay : =
+In wp-dday.php search $nice_tooltip (l.17) :
+* 0 = De-activated
+* 1 = activated without jQuery required
+* 2 = activated with jQuery required. Bettter if your theme or one of your extensions uses already jQuery
 
 == Changelog==
+= 0.4.1 =
+
+* Added an another script of nice tooltip : better when jQuery is already used by your theme or by one of your extensions
+* Improve script and style injection to be coherent with WP
+
+
 = 0.4.0 =
 
 * Small modification suggested by Dric ( http://www.driczone.net/blog ) to reduce the number of queries to the database.
@@ -90,7 +99,6 @@ In wp-dday.php search $nice_tooltip (l.29) and put him to 0 ( $nice_tooltip = 0;
 = ToDo =
 
 * Choice of unit of the countdown more flexible
-* Color of the event depending on the greater or lesser period until the event.
 
 Thanks to all who sent bug reports and ideas for improvements.
 

@@ -4,6 +4,7 @@ Author: Mdkart
 Author URI: http:/mdkart.fr
 Description: Admin tool for the Dday plugin.
 */
+ 
 // Localisation
 load_plugin_textdomain('wpdday', 'wp-content/plugins/dday/languages');
 
@@ -24,12 +25,7 @@ $ddayID = !empty($_REQUEST['ddayID']) ? $_REQUEST['ddayID'] : '';
 $debugText = '';
 $messages = '';
 
-echo '<link rel="stylesheet" href="'.get_option('siteurl').'/wp-content/plugins/dday/script/style.css" type="text/css" media="screen" />'."\n";
-echo '<script src="'.get_option('siteurl').'/wp-includes/js/prototype.js" type="text/javascript"></script>';
-echo '<script src="'.get_option('siteurl').'/wp-includes/js/scriptaculous/scriptaculous.js" type="text/javascript"></script>';
-echo '<script src="'.get_option('siteurl').'/wp-includes/js/scriptaculous/effects.js" type="text/javascript"></script>';
-echo '<script src="'.get_option('siteurl').'/wp-includes/js/scriptaculous/dragdrop.js" type="text/javascript"></script>';
-echo '<script src="'.get_option('siteurl').'/wp-content/plugins/dday/script/validation.js" type="text/javascript"></script>';
+
 ?>		<script type="text/javascript">
 		function go(expr) {
 		var reg = new RegExp("(&)", "g");
@@ -387,9 +383,9 @@ function wp_dday_display_list()
             <?php } ?>
 			</ul>
 			<INPUT type="button" class="button bold" value="<?php _e('Save this Order', 'wpdday');?> &raquo;" onClick="go(Sortable.serialize('dday_list'))" style="margin-top: 10px"/>
-		<script type="text/javascript">
-            Sortable.create('dday_list');
-        </script>        
+			<script type="text/javascript">
+				Sortable.create('dday_list');
+			</script>        
 		<?php
 	}
 	else
