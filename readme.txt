@@ -40,6 +40,10 @@ In wp-dday.php search $nice_tooltip (l.17) :
 * 2 = activated with jQuery required. Bettter if your theme or one of your extensions uses already jQuery
 
 == Changelog==
+= 0.4.3 =
+
+* Modified some method of injection of data in the database. Some slashes may appears, please delete them.
+
 = 0.4.2 =
 
 * Added an another script of nice tooltip : better when jQuery is already used by your theme or by one of your extensions

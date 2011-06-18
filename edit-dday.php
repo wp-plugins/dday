@@ -117,18 +117,6 @@ if ( $action == 'add' )
 	$tom = $_POST['dd_tom'];
 	$futur = $_POST['dd_futur'];
 	$visible = $_POST['dd_visible'];
-	// why do people leave this crap on?! turn it OFF OFF OFF!
-	if ( ini_get('magic_quotes_gpc') )
-	{	$title = stripslashes($title);
-		$url = stripslashes($url);
-		$des = stripslashes($des);
-		$past = stripslashes($past);
-		$yester = stripslashes($yester);
-		$tod = stripslashes($tod);
-		$imm = stripslashes($imm);
-		$tom = stripslashes($tom);
-		$futur = stripslashes($futur);
-	}	
 	if ( empty($title) or empty($month) or empty($year) or empty($day))
 	{	?>
 		<div class="error"><p><strong><?php _e('Fill all required fields', 'wpdday');?></strong></p></div>
@@ -143,18 +131,18 @@ if ( $action == 'add' )
 	if ($min == 0) { $min = 0;}
 	if ($sec == 0) { $sec = 0;}
 	$timestamp = gmmktime($hour, $min, $sec, $month, $day, $year);
-	$sql = "INSERT INTO " . WP_DDAY_TABLE . " SET title='" . mysql_escape_string($title)
-		 . "', url='" . mysql_escape_string($url) . "', date='" .$timestamp
+	$sql = "INSERT INTO " . WP_DDAY_TABLE . " SET title='" . $title
+		 . "', url='" . $url . "', date='" .$timestamp
 		 . "', nbr_jr_av='" .$nbr_jr_av . "', nbr_jr_ap='" .$nbr_jr_ap
 		 . "', rpt='" . $rpt . "', frq_rpt='" . $frq_rpt
-		 . "', des='" . mysql_escape_string($des) . "', past='" . mysql_escape_string($past) 
-		 . "', yester='" . mysql_escape_string($yester) . "', tod='" . mysql_escape_string($tod) 
-		 . "', imm='" . mysql_escape_string($imm) . "', tom='" . mysql_escape_string($tom) 
-		 . "', futur='" . mysql_escape_string($futur) . "', rank='" .$rank. "', visible='" . mysql_escape_string($visible) . "'";
+		 . "', des='" . $des . "', past='" . $past 
+		 . "', yester='" . $yester . "', tod='" . $tod
+		 . "', imm='" . $imm . "', tom='" . $tom
+		 . "', futur='" . $futur . "', rank='" .$rank. "', visible='" . $visible . "'";
 	     
 	$wpdb->get_results($sql);
 	
-	$sql = "SELECT ddayID FROM " . WP_DDAY_TABLE . " WHERE title='" . mysql_escape_string($title) . "'";
+	$sql = "SELECT ddayID FROM " . WP_DDAY_TABLE . " WHERE title='" . $title . "'";
 	$result = $wpdb->get_results($sql);
 	
 	if ( empty($result) || empty($result[0]->ddayID) )
@@ -189,19 +177,7 @@ elseif ( $action == 'edit_save' )
 	$tom = $_POST['dd_tom'];
 	$futur = $_POST['dd_futur'];
 	$visible = $_POST['dd_visible'];
-	
-	// why do people leave this crap on?! turn it OFF OFF OFF!
-	if ( ini_get('magic_quotes_gpc') )
-	{	$title = stripslashes($title);
-		$url = stripslashes($url);
-		$des = stripslashes($des);
-		$past = stripslashes($past);
-		$yester = stripslashes($yester);
-		$tod = stripslashes($tod);
-		$imm = stripslashes($imm);
-		$tom = stripslashes($tom);
-		$futur = stripslashes($futur);
-	}
+
 	if ( empty($ddayID) )
 	{
 	?>
@@ -219,19 +195,19 @@ elseif ( $action == 'edit_save' )
 		if ($min == 0) { $min = 0;}
 		if ($sec == 0) { $sec = 0;}
 		$timestamp = gmmktime($hour, $min, $sec, $month, $day, $year);
-		$sql = "UPDATE " . WP_DDAY_TABLE . " SET title='" . mysql_escape_string($title)	     
-		  . "', url='" . mysql_escape_string($url) . "', date='" .$timestamp
+		$sql = "UPDATE " . WP_DDAY_TABLE . " SET title='" . $title	     
+		  . "', url='" . $url . "', date='" .$timestamp
 		 . "', nbr_jr_av='" .$nbr_jr_av . "', nbr_jr_ap='" .$nbr_jr_ap
 		 . "', rpt='" .$rpt . "', frq_rpt='" .$frq_rpt
-		 . "', des='" . mysql_escape_string($des) . "', past='" . mysql_escape_string($past) 
-		 . "', yester='" . mysql_escape_string($yester) . "', tod='" . mysql_escape_string($tod) 
-		 . "', imm='" . mysql_escape_string($imm) . "', tom='" . mysql_escape_string($tom) 
-		 . "', futur='" . mysql_escape_string($futur)	. "', visible='" . mysql_escape_string($visible) . "'"
+		 . "', des='" . $des . "', past='" . $past
+		 . "', yester='" . yester . "', tod='" . $tod
+		 . "', imm='" . $imm . "', tom='" . $tom 
+		 . "', futur='" . $futur	. "', visible='" . $visible . "'"
 		 . " where ddayID='" .$ddayID . "'";
 		     
 		$wpdb->get_results($sql);
 		
-		$sql = "SElECT ddayID FROM " . WP_DDAY_TABLE . " WHERE title='" . mysql_escape_string($title) . "'";
+		$sql = "SElECT ddayID FROM " . WP_DDAY_TABLE . " WHERE title='" . $title . "'";
 		$result = $wpdb->get_results($sql);
 		
 		if ( empty($result) || empty($result[0]->ddayID) )
@@ -283,7 +259,7 @@ elseif ( $action == 'publish' )
 		<?php 
 	}
 	else
-	{	$sql = "UPDATE " . WP_DDAY_TABLE . " SET visible='" . mysql_escape_string($vis) . "'"
+	{	$sql = "UPDATE " . WP_DDAY_TABLE . " SET visible='" . $vis . "'"
 		 . " WHERE ddayID=" .$ddayID;
 		$wpdb->get_results($sql);	
 	
@@ -460,7 +436,7 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 							<strong class="label"><?php _e('Repeat every : ', 'wpdday');?></strong>
 							<div class="field-widget">
 							<div class="field-widget"><input name="dd_frq_rpt" id="dd_frq_rpt" class="validate-number" title="Frequence of the repetition" value="<?php if ( !empty($data) ) echo htmlspecialchars($data->frq_rpt); ?>"/></div>
-								<select id="dd_rpt" name="dd_rpt" title="Choose your repeatition">
+								<select id="dd_rpt" name="dd_rpt" title="Choose your repetition">
 									<option value="0" <?php if ( empty($data) || $data->rpt=='0' ) echo "selected" ?>><?php _e('No', 'wpdday');?></option>
 									<option value="1" <?php if ( $data->rpt=='1' ) echo "selected" ?>><?php _e('Day', 'wpdday');?></option>
 									<option value="2" <?php if ( $data->rpt=='2' ) echo "selected" ?>><?php _e('Week', 'wpdday');?></option>
