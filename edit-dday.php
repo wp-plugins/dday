@@ -117,6 +117,20 @@ if ( $action == 'add' )
 	$tom = $_POST['dd_tom'];
 	$futur = $_POST['dd_futur'];
 	$visible = $_POST['dd_visible'];
+	
+	// why do people leave this crap on?! turn it OFF OFF OFF!
+	if ( ini_get('magic_quotes_gpc') )
+	{	$title = stripslashes($title);
+		$url = stripslashes($url);
+		$des = stripslashes($des);
+		$past = stripslashes($past);
+		$yester = stripslashes($yester);
+		$tod = stripslashes($tod);
+		$imm = stripslashes($imm);
+		$tom = stripslashes($tom);
+		$futur = stripslashes($futur);
+	}
+	
 	if ( empty($title) or empty($month) or empty($year) or empty($day))
 	{	?>
 		<div class="error"><p><strong><?php _e('Fill all required fields', 'wpdday');?></strong></p></div>
@@ -131,16 +145,15 @@ if ( $action == 'add' )
 	if ($min == 0) { $min = 0;}
 	if ($sec == 0) { $sec = 0;}
 	$timestamp = gmmktime($hour, $min, $sec, $month, $day, $year);
-	$sql = "INSERT INTO " . WP_DDAY_TABLE . " SET title='" . $title
-		 . "', url='" . $url . "', date='" .$timestamp
-		 . "', nbr_jr_av='" .$nbr_jr_av . "', nbr_jr_ap='" .$nbr_jr_ap
-		 . "', rpt='" . $rpt . "', frq_rpt='" . $frq_rpt
-		 . "', des='" . $des . "', past='" . $past 
-		 . "', yester='" . $yester . "', tod='" . $tod
-		 . "', imm='" . $imm . "', tom='" . $tom
-		 . "', futur='" . $futur . "', rank='" .$rank. "', visible='" . $visible . "'";
-	     
-	$wpdb->get_results($sql);
+	$sql = "INSERT INTO " .WP_DDAY_TABLE. " SET title='" .$title.
+		 "', url='" .$url. "', date='" .$timestamp.
+		 "', nbr_jr_av='" .$nbr_jr_av. "', nbr_jr_ap='" .$nbr_jr_ap.
+		 "', rpt='" .$rpt. "', frq_rpt='" .$frq_rpt.
+		 "', des='" .$des. "', past='" .$past.
+		 "', yester='" .$yester . "', tod='" .$tod.
+		 "', imm='" .$imm.  "', tom='" .$tom.
+		 "', futur='" .$futur. "', rank='" .$rank. "', visible='" .$visible. "'";
+	$wpdb->get_results($wpdb->prepare($sql));
 	
 	$sql = "SELECT ddayID FROM " . WP_DDAY_TABLE . " WHERE title='" . $title . "'";
 	$result = $wpdb->get_results($sql);
@@ -177,6 +190,19 @@ elseif ( $action == 'edit_save' )
 	$tom = $_POST['dd_tom'];
 	$futur = $_POST['dd_futur'];
 	$visible = $_POST['dd_visible'];
+	
+	// why do people leave this crap on?! turn it OFF OFF OFF!
+	if ( ini_get('magic_quotes_gpc') )
+	{	$title = stripslashes($title);
+		$url = stripslashes($url);
+		$des = stripslashes($des);
+		$past = stripslashes($past);
+		$yester = stripslashes($yester);
+		$tod = stripslashes($tod);
+		$imm = stripslashes($imm);
+		$tom = stripslashes($tom);
+		$futur = stripslashes($futur);
+	}
 
 	if ( empty($ddayID) )
 	{
@@ -195,19 +221,18 @@ elseif ( $action == 'edit_save' )
 		if ($min == 0) { $min = 0;}
 		if ($sec == 0) { $sec = 0;}
 		$timestamp = gmmktime($hour, $min, $sec, $month, $day, $year);
-		$sql = "UPDATE " . WP_DDAY_TABLE . " SET title='" . $title	     
-		  . "', url='" . $url . "', date='" .$timestamp
-		 . "', nbr_jr_av='" .$nbr_jr_av . "', nbr_jr_ap='" .$nbr_jr_ap
-		 . "', rpt='" .$rpt . "', frq_rpt='" .$frq_rpt
-		 . "', des='" . $des . "', past='" . $past
-		 . "', yester='" . yester . "', tod='" . $tod
-		 . "', imm='" . $imm . "', tom='" . $tom 
-		 . "', futur='" . $futur	. "', visible='" . $visible . "'"
-		 . " where ddayID='" .$ddayID . "'";
-		     
-		$wpdb->get_results($sql);
+		$sql = "UPDATE " .WP_DDAY_TABLE. " SET title='" .$title.	     
+		 "', url='" .$url. "', date='" .$timestamp.
+		 "', nbr_jr_av='" .$nbr_jr_av. "', nbr_jr_ap='" .$nbr_jr_ap.
+		 "', rpt='" .$rpt. "', frq_rpt='" .$frq_rpt.
+		 "', des='" .$des. "', past='" .$past.
+		 "', yester='" .$yester. "', tod='" .$tod.
+		 "', imm='" . $imm. "', tom='" .$tom.
+		 "', futur='" .$futur. "', visible='" .$visible.
+		 "' where ddayID='" .$ddayID. "'";
+		$wpdb->get_results($wpdb->prepare($sql));
 		
-		$sql = "SElECT ddayID FROM " . WP_DDAY_TABLE . " WHERE title='" . $title . "'";
+		$sql = "SElECT ddayID FROM " . WP_DDAY_TABLE . " WHERE title='" .$title. "'";
 		$result = $wpdb->get_results($sql);
 		
 		if ( empty($result) || empty($result[0]->ddayID) )
@@ -261,7 +286,7 @@ elseif ( $action == 'publish' )
 	else
 	{	$sql = "UPDATE " . WP_DDAY_TABLE . " SET visible='" . $vis . "'"
 		 . " WHERE ddayID=" .$ddayID;
-		$wpdb->get_results($sql);	
+		$wpdb->get_results($wpdb->prepare($sql));	
 	
 			?>
 			<div class="updated"><p>
@@ -413,7 +438,7 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 					<fieldset>
 						<div class="form-row">
 							<strong class="label"><?php _e('Title : ', 'wpdday');?></strong>
-							<div class="field-widget"><textarea name="dd_title" id="dd_title" class="required" title="Enter a title" cols=45 rows=3><?php if ( !empty($data) ) echo htmlspecialchars($data->title); ?> </textarea></div>
+							<div class="field-widget"><textarea name="dd_title" id="dd_title" class="required" title="Enter a title" cols=45 rows=3><?php if ( !empty($data) ) echo htmlspecialchars($data->title); ?></textarea></div>
 						</div>
 						<div class="form-row">
 							<strong class="label"><?php _e('Date (D/M/Y H:M:S): ', 'wpdday');?></strong>
