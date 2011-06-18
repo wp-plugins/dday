@@ -5,7 +5,7 @@ Plugin URI: http://mdkart.fr/blog/plugin-dday-pour-wordpress
 Description: This plugin allows you to display DDay's. It also has a spiffy management tool in the administrative console. Fully customizable. 
 Author: Mdkart
 Author URI: http://mdkart.fr/
-Version: 0.4.2
+Version: 0.4.3
 Put in /wp-content/plugins/dday/ of your Wordpress installation
 Inpsired by :
 - DDay plugin by Franck Paul for Dotclear : http://franck.paul.free.fr/dotclear/?2005/03/22/105-plugin-jour-j
@@ -166,7 +166,7 @@ function countdown($ddayID, $option, $data='')
 		if ($des <> '') {
 		$item_list .= $des.' : <br/>';
 		}
-		$item_list .= gmdate ( "d/m/Y H:i:s" , $date ).'" class="dday-title">';
+		$item_list .= gmdate ("d/m/Y H:i:s" , $date).'" class="dday-title">';
 		switch (true) {
 			case ($delay_day < -1):
 			# C'etait avant-hier ou encore avant
