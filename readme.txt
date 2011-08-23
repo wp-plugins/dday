@@ -1,8 +1,8 @@
 === DDay ===
 Contributors: Mdkart
 Tags: event, countdown, date, widget
-Requires at least: 1.5
-Tested up to: 3.1.3
+Requires at least: 2.6
+Tested up to: 3.2.1
 Stable tag: trunk
 
 This plugin allow to associate a countdown to events.
