@@ -153,7 +153,7 @@ if ( $action == 'add' )
 		 "', yester='" .$yester . "', tod='" .$tod.
 		 "', imm='" .$imm.  "', tom='" .$tom.
 		 "', futur='" .$futur. "', rank='" .$rank. "', visible='" .$visible. "'";
-	$wpdb->get_results($wpdb->prepare($sql));
+	$wpdb->query($sql);
 	
 	$sql = "SELECT ddayID FROM " . WP_DDAY_TABLE . " WHERE title='" . $title . "'";
 	$result = $wpdb->get_results($sql);
@@ -230,9 +230,9 @@ elseif ( $action == 'edit_save' )
 		 "', imm='" . $imm. "', tom='" .$tom.
 		 "', futur='" .$futur. "', visible='" .$visible.
 		 "' where ddayID='" .$ddayID. "'";
-		$wpdb->get_results($wpdb->prepare($sql));
+		$wpdb->query($sql);
 		
-		$sql = "SElECT ddayID FROM " . WP_DDAY_TABLE . " WHERE title='" .$title. "'";
+		$sql = "SELECT ddayID FROM " . WP_DDAY_TABLE . " WHERE title='" .$title. "'";
 		$result = $wpdb->get_results($sql);
 		
 		if ( empty($result) || empty($result[0]->ddayID) )
@@ -286,7 +286,7 @@ elseif ( $action == 'publish' )
 	else
 	{	$sql = "UPDATE " . WP_DDAY_TABLE . " SET visible='" . $vis . "'"
 		 . " WHERE ddayID=" .$ddayID;
-		$wpdb->get_results($wpdb->prepare($sql));	
+		$wpdb->query($sql);	
 	
 			?>
 			<div class="updated"><p>
@@ -432,10 +432,10 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 		<input type="hidden" name="ddayID" value="<?php echo $ddayID?>"/>
 		<div id="item_manager">
 			<div style="float: left; width: 98%; clear: both;" class="top">
+				<fieldset>
 				<!-- List URL -->
 				<?php if (($ddayID) != 1) 
 				{ ?>
-					<fieldset>
 						<div class="form-row">
 							<strong class="label"><?php _e('Title : ', 'wpdday');?></strong>
 							<div class="field-widget"><textarea name="dd_title" id="dd_title" class="required" title="Enter a title" cols=45 rows=3><?php if ( !empty($data) ) echo htmlspecialchars($data->title); ?></textarea></div>
@@ -484,7 +484,7 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 				;} ?>
 						<h3><?php _e('Format for past events :', 'wpdday');?></h3>
 						<div class="form-row">
-							<div class="label"><strong><?php _e('For 2 days or more', 'wpdday');?> : </strong><br/><small>Ex : TITLE% for %DELAY_DAY% days</small></div>
+							<div class="label"><strong><?php _e('For 2 days or more', 'wpdday');?> : </strong><br/><small>Ex : %TITLE% for %DELAY_DAY% days</small></div>
 							<div class="field-widget"><textarea name="dd_past" id="dd_past" cols=45 rows=3 ><?php if ( !empty($data) ) echo htmlspecialchars($data->past); ?></textarea></div>
 						</div>
 						<div class="form-row">
@@ -514,10 +514,9 @@ function wp_dday_edit_form($mode='add', $ddayID=false)
 						<li><?php _e('<b>%DELAY_DAY%</b> will be replaced by the delay in days', 'wpdday');?></li>
 						<li><?php _e('Only for imminent events <b>%DELAY_HR%</b> will be replaced by the delay in hours and <b>%DELAY_MIN%</b> by the delay in minutes', 'wpdday');?></li>
 						<li><?php _e('For Title, Description and Format : <b>%DATE%</b> will be replaced by d/m/y. <b>%DATEandHOUR%</b> adds h:m:s', 'wpdday');?></li>
-						<ul>
-					</div>
+						</ul>
 					<?php if (($ddayID) != 1) 
-				{ ?>
+				{ ?>	</div>
 						<div class="form-row">
 							<strong ><?php _e('Visible : ', 'wpdday');?></strong>
 							<div class="field-widget">

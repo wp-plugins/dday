@@ -2,7 +2,7 @@
 Contributors: Mdkart
 Tags: event, countdown, date, widget
 Requires at least: 2.6
-Tested up to: 3.2.1
+Tested up to: 3.4.2
 Stable tag: trunk
 
 This plugin allow to associate a countdown to events.
@@ -40,6 +40,10 @@ In wp-dday.php search $nice_tooltip (l.17) :
 * 2 = activated with jQuery required. Bettter if your theme or one of your extensions uses already jQuery
 
 == Changelog==
+= 0.4.5 =
+
+* Bug fixes
+
 = 0.4.4 =
 
 * Modified some method of injection of data in the database for improving security. Some slashes may appears, please delete them.
